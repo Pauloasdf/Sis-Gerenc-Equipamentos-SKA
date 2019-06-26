@@ -1,7 +1,5 @@
 import React from 'react';
-import Cabecalho from '../components/navbar';
 import Button from 'react-bootstrap/Button';
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,27 +11,24 @@ import Col from 'react-bootstrap/Col';
 //   };
 
 function login() {
-    console.log('hey');
+    document.location.href = 'http://localhost:3000/login';
+}
+function singup() {
+    document.location.href = 'http://localhost:3000/singup';
 }
 
-
 class LoginSingUp extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
-        var tipoDisp = '';
-        var marginTopContainer = '30px';
-        const comprimentoTela = window.innerWidth;
-        if (comprimentoTela < 571) {
-            tipoDisp = 'smartphone';
-        } else {
-            tipoDisp = 'computer'
-        }
+        var cor = this.props.cor;
         return (
             <div>
-                <Cabecalho app={"SisGen"} tipoDisp={tipoDisp}></Cabecalho>
                 {/* <div className="overlay" style={divStyle}><Navbar></Navbar></div> */}
 
                 <>
-                    <Container style={{ marginTop: marginTopContainer,height: window.innerHeight-100}}>
+                    <Container style={{ marginTop: this.props.marginTopContainer,height: window.innerHeight-100}}>
                         <Row className="justify-content-xs-center" style={{ height: '90%'}}>
                             <Col xs={2} sm={2} className="Auxiliar"></Col>
                             <Col xs={8} sm={8} md={5} lg={5} style={{ backgroundColor: 'none'}}>
@@ -44,7 +39,7 @@ class LoginSingUp extends React.Component {
                             <Col xs={12} sm={12} md={2} lg={2} ></Col>
                             <Col xs={2} sm={2} className="Auxiliar"></Col>
                             <Col xs={8} sm={8} md={5} lg={5} style={{backgroundColor: 'none'}}>
-                                <Button onClick={login} style={{height: '100%',width:'100%',borderRadius: '10%' }}>
+                                <Button onClick={singup} style={{height: '100%',width:'100%',borderRadius: '10%' }}>
                                     <h1> Quero me Cadastrar </h1>
                                 </Button>
                             </Col>
