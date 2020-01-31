@@ -1,55 +1,74 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { Fragment } from 'react';
+// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
-
+import Login from '../components/login';
+import Cadastro from '../components/cadastro';
+import Home from './home';
+import Cabecalho from './cabecalho';
+import endereco from '../back-end/endereco';
 // const divStyle = {
 //     margin: '40px',
 //     border: '5px solid pink'
 //   };
 
-function login() {
-    document.location.href = 'http://localhost:3000/login';
-}
-function singup() {
-    document.location.href = 'http://localhost:3000/singup';
-}
-
 class LoginSingUp extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            size: ''
+        };
+        this.obterTamanho = this.obterTamanho.bind(this);
     }
-    render() {
-        var cor = this.props.cor;
+    componentDidMount(){
+        fetch('http://' + endereco + ':8080/users')
+        .then(result => result.json())
+        .then(data => this.setState({users:data})); 
+    }
+   
+    obterTamanho() {
+        if (window.innerHeight > 650) {
+            return "'" + window.innerHeight + "px'";
+        } else {
+            return 'auto';
+        }
+    }
+
+    render() {    
         return (
-            <div>
-                {/* <div className="overlay" style={divStyle}><Navbar></Navbar></div> */}
+            <>
+                {!sessionStorage.getItem('user') &&
+                    <Fragment>
+                        <div style={{ height: window.innerHeight - 70 }}>
+                            <Cabecalho></Cabecalho>
+                            <Container className={'container-body'} float={'center'} style={{marginTop:'75px'}}>
+                                <Row className="justify-content-xs-center" style={{ height: '100%'}}>
+                                    <Col xs={2} sm={2} md={3} className="Auxiliar"></Col>
+                                    <Col className={'login-cadastro'} xs={12} sm={12} md={6} lg={5} style={{ backgroundColor: '#00729A', height: '100%', paddingRight: '25px',marginLeft:'auto',marginRight:'auto',borderRadius:'7px 7px 7px 7px'}}>
+                                        <center><h1 style={{ color: 'white',marginTop:'15px' }}>Já possuo um login</h1></center>
+                                        <Login users={this.state.users}></Login>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={1}><br></br></Col>
+                                    <Col xs={2} sm={2} md={3} className="Auxiliar"></Col>
+                                    <Col className={'login-cadastro'} xs={12} sm={12} md={6} lg={5} style={{ backgroundColor: '#00729A', height: '100%', paddingRight: '25px',marginLeft:'auto',marginRight:'auto',borderRadius:'7px 7px 7px 7px'}}>
+                                        <center><h1 style={{ color: 'white',marginTop:'15px' }}>Quero me cadastrar</h1></center>
+                                        <Cadastro users={this.state.users}></Cadastro>
+                                    </Col>
 
-                <>
-                    <Container style={{ marginTop: this.props.marginTopContainer,height: window.innerHeight-100}}>
-                        <Row className="justify-content-xs-center" style={{ height: '90%'}}>
-                            <Col xs={2} sm={2} className="Auxiliar"></Col>
-                            <Col xs={8} sm={8} md={5} lg={5} style={{ backgroundColor: 'none'}}>
-                                <Button className="btn-success" onClick={login} style={{ height: '100%',width:'100%',borderRadius: '10%' }}>
-                                    <h1> Já possuo um login </h1>
-                                </Button>
-                            </Col>
-                            <Col xs={12} sm={12} md={2} lg={2} ></Col>
-                            <Col xs={2} sm={2} className="Auxiliar"></Col>
-                            <Col xs={8} sm={8} md={5} lg={5} style={{backgroundColor: 'none'}}>
-                                <Button onClick={singup} style={{height: '100%',width:'100%',borderRadius: '10%' }}>
-                                    <h1> Quero me Cadastrar </h1>
-                                </Button>
-                            </Col>
-                            
-                            
-                        </Row>
-                    </Container>
-                </>
 
-            </div>
+                                </Row>
+                            </Container>
+                        </div>
+                    </Fragment>
+                }
+                {sessionStorage.getItem('user') &&
+                    <Fragment>
+                        <Home></Home>
+                    </Fragment>
+                }
+
+            </>
 
         );
     }

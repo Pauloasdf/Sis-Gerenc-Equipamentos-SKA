@@ -2,24 +2,23 @@ import React from 'react';
 import './App.css';
 import LoginSingUp from './components/login-singup'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Cabecalho from '../src/components/navbar';
-import Footer from '../src/components/footer'
-
 function App() {
   var tipoDisp = '';
         var marginTopContainer = '30px';
-        const tamanhoTela = window.innerHeight;
         const comprimentoTela = window.innerWidth;
         if (comprimentoTela < 571) {
             tipoDisp = 'smartphone';
         } else {
-            tipoDisp = 'computer'
+            tipoDisp = 'computer';
+        }
+
+        if(sessionStorage.getItem('user')){
+          document.location.href = 'http://10.10.10.235:3000/home';
         }
   return (
-    <div className="App">
-      <Cabecalho app={"SisGen"} tipoDisp={tipoDisp}></Cabecalho>
+      <div className="App" style={{height:'100%'}}>
       <LoginSingUp tipoDisp={tipoDisp} marginTopContainer={marginTopContainer}></LoginSingUp>
-      <Footer cor={'dark'} tamanho={tamanhoTela}></Footer>
+      {/* <Footer cor={cor}></Footer> */}
     </div>
   );
 }

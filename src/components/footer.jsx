@@ -1,18 +1,21 @@
 import React from 'react';
-import {Navbar} from 'reactstrap'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import StickyFooter from 'react-sticky-footer';
 
 class Footer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
-        var cor = this.props.cor;
-        var tamanho = this.props.tamanho;
         return (
-            <Navbar color={cor} expand="md">
+            <StickyFooter
+                bottomThreshold={200}
+                normalStyles={{
+                    backgroundColor: this.props.cor,
+                    padding: "2rem"
+                }}
+                // style={{ backgroundColor: this.props.cor }}
+            >
+
                 <Container fluid>
                     <Row className="justify-content-xs-center">
                         <Col xs={12} sm={12} md={6} lg={6}>
@@ -34,7 +37,7 @@ class Footer extends React.Component {
                         </Col>
                     </Row> */}
                 </Container>
-                </Navbar>
+            </StickyFooter>
         )
     }
 }
